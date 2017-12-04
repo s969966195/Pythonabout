@@ -59,3 +59,30 @@ print [m(2) for m in multipliers()]
 ```
 
 上述问题产生的原因是Python闭包的延迟绑定。这意味着内部函数被调用时，参数的值在闭包内进行查找。因此，当任何由multipliers()返回的函数被调用时，i的值将在附近的范围进行查找。那时，不管返回的函数是否被调用，for循环已经完成，i被赋予了最终的值3。
+
+解决一：
+Python生成器
+
+```
+def multipliers():
+	for i in range(4):
+		yield lambda x : i * x
+```
+
+解决二：
+闭包
+
+```
+def multipliers():
+	return [lambda x, i = i : i * x for i in range(4)]
+```
+
+解决三：
+偏函数
+
+```
+from functools import partial
+from operator import mul
+def multipliers():
+	return [partial(mul, i) for i in range(4)]
+```
