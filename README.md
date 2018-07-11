@@ -173,3 +173,37 @@ Python3已达到商用级别，但是迁移是非常大的工程，收益并不�
 ##### 读/贡献Python标准库 优秀开源项目代码
 1. 《Python标准库》
 2. [Python 3 Module of the Week](https://pymotw.com/3/)
+
+## Python安装
+
+##### Python环境搭建(安装或升级最新版本)
+1. 使用系统自带的包管理工具 </br>
+	二进制文件，不需要编译 </br>
+	`sudo apt-get install python3.6` </br>
+	软件更新版本不及时
+	官网没有出包，可以使用PPA找个人用户有没有制作
+	
+	```
+	sudo apt-get install software-properties-common
+	sudo add-apt-repository ppa:XXX/ppa
+	sudo apt-get update
+	sudo apt-get install python3.7
+	```
+2. 官网找对应的平台安装包
+3. 源码安装</br>
+**优点**：</br>
+(1). 普适</br>
+(2). 可定制</br>
+(3). 及时体验最新版本</br>
+**缺点**：</br>
+(1). 编译很慢</br>
+(2). 没有对应平台做过优化和设置</br>
+`./configure && make && sudo make install`
+
+## 使用Python自带交互式环境
+
+##### REPL(Read-Eval-Print Loop)
+读入-求值-输出 循环</br>
+`python`
+##### IDLE(Python软件包自带的开发环境)
+`sudo apt-get install idle3`
