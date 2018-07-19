@@ -207,3 +207,80 @@ Python3已达到商用级别，但是迁移是非常大的工程，收益并不�
 `python`
 ##### IDLE(Python软件包自带的开发环境)
 `sudo apt-get install idle3`
+
+## 简单数据类型
+
+##### 字符串
+**In:** 
+
+```
+"""
+This
+is
+a Test
+"""
+```
+**Out:**
+
+```
+\nThis\nis\na Test\n
+```
+
+```
+string.upper/lower() # 大写
+string.endswith/startswith('c') # 是否以某个字符开头或结尾
+string.split()
+string.rsplit(None, 1) # 从右向左分隔 并且保留第一个分割项
+”a b c“.rsplit(None, 1) => ['a b', 'c']
+string.strip/lstrip/rstrip() # 也可以指定其他字符
+string.replace('a', 'b')
+'/a/b/c'.partition('/') => ('', '/', 'a/b/c') # 头部，分割符，尾部
+string.rpartition() # 从右向左分区
+','.join(['a', 'b'])
+'thi{}'.format('s')
+
+dir('') # 内置方法 
+
+转义
+'他说：\'你好\'' => "他说：'你好'"
+
+f
+name = "Fred"
+f'I am {name}' => 'I am Fred'
+import datetime
+anniversary = datetime.date(1991, 10, 12)
+f'It\'s {anniversary:%A, %B %d, %Y}' => "It's Saturday, October 12, 1991"
+```
+
+**整型** </br>
+2 ** 3 = 8</br>
+2 / 3 = 0.6666666666666666
+
+**浮点数**</br>
+1.1 - 0.2 = 0.900000000000000001</br>
+1.1 * 0.2 = 0.22000000000000000000000003</br>
+可以使用
+
+```
+from decimal import Decimal
+Decimal['1.1'] * Decimal['0.2']
+```
+
+**类型转换**</br>
+str(1) int('1') float(1)
+
+**Python 2的除法**
+
+```
+2 / 3 => 0
+3 / 2 => 1 整数除法的结果只保留了整数部分
+
+float(3) / 2 => 1.5 让分子或分母成为浮点数
+```
+
+**布尔值**
+
+[https://www.python.org/dev/peps/pep-3101](https://www.python.org/dev/peps/pep-3101)
+[https://www.python.org/dev/peps/pep-0498/](https://www.python.org/dev/peps/pep-0498/)
+PEP Python增强建议书
+[https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex)
