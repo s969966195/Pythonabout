@@ -284,3 +284,174 @@ float(3) / 2 => 1.5 让分子或分母成为浮点数
 [https://www.python.org/dev/peps/pep-0498/](https://www.python.org/dev/peps/pep-0498/)
 PEP Python增强建议书
 [https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex)
+
+## 变量和关键字
+
+```
+import keyword
+', '.join(keyword.kwlist)
+```
+
+**延伸阅读**
+[https://www.programiz.com/python-programming/keyword-list](https://www.programiz.com/python-programming/keyword-list)
+
+## 列表
+**数据结构**是计算机存储、组织数据的方式。数据结构是指相互之间存在一种或多种特定关系的数据元素的集合。
+
+**序列(SequenceSequence)**</br>
+序列是Python中最基本的数据结构，序列每个元素会被分配一个序号，也就是元素的位置，叫做索引。
+
+内置序列类型
+
+1. List 列表
+2. Tuple 元组
+3. Ranges range函数
+4. Str 文本序列
+5. Binary 二进制(bytes, bytearray, memoryview)
+6. Set, frozenset 集合
+7. Dict 字典
+
+####列表
+**append**
+
+```
+firends = []                                 
+firends.append('David')
+Out: ['David']
+```
+
+**extend** 一次性添加多个
+
+```
+firends.extend(['Chris', 'Amy'])
+['David', 'Chris', 'Amy']
+```
+
+**列表分片**
+
+```
+In : firends
+Out: ['David', 'Chris', 'Amy'] 
+In : firends[2]                                         
+Out: 'Amy'
+In : firends[-1]                                        
+Out: 'Amy'
+In : firends[1:3]                                       
+Out: ['Chris', 'Amy']
+In : firends[1:]                                        
+Out: ['Chris', 'Amy']
+In : firends[:1]                                        
+Out: ['David']  
+```
+
+**分片步长** 默认为1
+
+```
+In : [0, 1, 2, 3, 4, 5][:]                              
+Out: [0, 1, 2, 3, 4, 5]                                 
+In : [0, 1, 2, 3, 4, 5][0:6:1]                          
+Out: [0, 1, 2, 3, 4, 5]                                 
+In : [0, 1, 2, 3, 4, 5][0:6:2]                          
+Out: [0, 2, 4]                                          
+In : [0, 1, 2, 3, 4, 5][::-1]                           
+Out: [5, 4, 3, 2, 1, 0]
+```
+
+**修改元素**
+
+```
+In : firends[0] = 'Andy'                                
+In : firends
+Out: ['Andy', 'Chris', 'Amy']                           
+In : firends[1:3] = ['Sophia', 'Emma', 'Sarah']         
+In : firends
+Out: ['Andy', 'Sophia', 'Emma', 'Sarah'] 
+```
+
+**insert** 指定位置添加
+
+```
+In : firends.insert(1, 'Olivia')                        
+In : firends
+Out: ['Andy', 'Olivia', 'Sophia', 'Emma', 'Sarah']
+```
+
+**len**
+
+```
+In : l = [0, 1, 2, 3, 4, 5]                             
+In : len(l)                                             
+Out: 6
+```
+
+**删除元素**
+
+```
+In : firends = ['Andy', 'Olivia', 'Sophia', 'Sarah', 'Chris']   
+In : del firends[0] # 明确知道索引In : firends
+Out: ['Olivia', 'Sophia', 'Sarah', 'Chris'] 
+In : firends.pop() # 从尾部去掉一个元素
+Out: 'Chris'                                                    
+In : firends
+Out: ['Olivia', 'Sophia', 'Sarah'] 
+In : firends.pop(0) # 弹出特定索引Out: 'Olivia'                                                   In : firends
+Out: ['Sophia', 'Sarah']
+```
+
+**remove**
+
+```
+In : firends.remove('Sophia')In : firends
+Out[21]: ['Sarah']
+```
+
+**搜索元素**
+
+```
+In : l = [1, 2, 1, 3]
+In : l.index(1)
+Out: 0
+In : l.index(1, 1)
+Out: 2
+In : 3 in l
+Out: True
+In : 6 in l
+Out: False
+```
+
+**排序**
+
+```
+In : l = [1, 3, 2]                                      
+In : sorted(l)                                          
+Out: [1, 2, 3]                                          
+In : l
+Out: [1, 3, 2]                                          
+In : l.sort()                                           
+In : l
+Out: [1, 2, 3]
+```
+
+**reverse**
+
+```
+In : list(reversed(l)) 
+Out: [3, 2, 1]
+In : l.reverse()
+In : l
+Out: [3, 2, 1] 
+In : sorted([1, 3, 2], reverse=False)
+Out: [1, 2, 3]
+In : sorted([1, 3, 2], reverse=True)
+Out: [3, 2, 1]
+```
+
+**延伸阅读**
+
+1. [https://developers.google.com/edu/python/lists](https://developers.google.com/edu/python/lists)
+2. [https://developers.google.com/edu/python/sorting](https://developers.google.com/edu/python/sorting)
+
+
+
+
+
