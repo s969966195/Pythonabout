@@ -451,7 +451,67 @@ Out: [3, 2, 1]
 1. [https://developers.google.com/edu/python/lists](https://developers.google.com/edu/python/lists)
 2. [https://developers.google.com/edu/python/sorting](https://developers.google.com/edu/python/sorting)
 
+## 元组
+列表适合存储可变化的数据集，元组不可被修改
 
+```
+In : tup = (1, 2)In : tuple([1, 2])
+Out: (1, 2)
+In : list((1, 2))
+Out: [1, 2] 
+```
 
+##### 为什么需要？
+不可变的对象可以做一些优化，出于性能和内存占用</br>
+timeit用来测试性能
 
+```
+❯ python -m timeit '["fee", "fie", "fo", "fum"]'
+10000000 loops, best of3: 0.0844 usec per loop
+❯ python -m timeit '("fee", "fie", "fo", "fum")'
+10000000 loops, best of3: 0.019 usec per loop
+```
+
+直接用圆括号会被当做顺序运算，要加逗号
+
+```
+In : tup = (1,)
+In : type(tup)
+Out: tuple 
+```
+
+可以通过下标访问，但不能修改其中的元素</br>
+下面代码虽然报错，但是赋值成功了，因为分了两步，列表赋值成功，元组失败，变量赋值采用对象引用，传递的是对象内存地址，不能干涉对象的修改
+
+```
+In : tup = (1, 2, [3, 4])
+In : tup[2] += [5, 6]
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-112-cd710f9ae250> in <module>()
+----> 1 tup[2] += [5, 6]
+TypeError: 'tuple' object does not support item assignment
+In : tupOut: (1, 2, [3, 4, 5, 6])
+```
+
+不能删除，但可以合并。index查找(值，开始，结束)，默认返回第一个。count获得符合的数量。
+
+```
+In : (1, 2) + (3, 4)
+Out: (1, 2, 3, 4)
+In : tup = (1, 2, 'a', 1)
+In : tup.index(1)
+Out: 0
+In : tup.index(1, 1)
+Out: 3
+In : tup.index(1, 1, 4)
+Out: 3
+In : tup.count('a')
+Out: 1
+```
+
+##### 延伸阅读
+1. [https://docs.python.org/3/library/timeit.html](https://docs.python.org/3/library/timeit.html)
+2. [http://t.cn/RnvaZ6j](https://docs.python.org/3/library/timeit.html)
 
