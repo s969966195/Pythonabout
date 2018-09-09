@@ -986,7 +986,7 @@ Out: [1, 3]
 ``` 
 
 **reduce**
-将每个元素执行add函数
+将每个元素执行add函数，Python2可直接使用，3需要导入模块
 
 ```
 In : def add(a, b):                                     
@@ -1054,11 +1054,12 @@ In : def append_to(element, to=None):
 ...: 
 ```
 
-**开发陷阱(二) 闭包变量绑定**
+**开发陷阱(二) 闭包变量绑定**<br/>
+希望0 2 4 6 8 内部函数在调用时查询得到的，延迟绑定，i都被设置成4
 
 ```
 In : def create_multipliers():                          
-...:    return [lambda x : i * x for i inrange(5)]     
+...:    return [lambda x : i * x for i in range(5)]     
 ...:                                                    
 
 In : for multiplier in create_multipliers():            
@@ -1074,10 +1075,11 @@ In : for multiplier in create_multipliers():
 
 ```
 In : def create_multipliers():                                  
-....:    return [lambda x, i=i : i * x for i inrange(5)]       
+....:    return [lambda x, i=i : i * x for i in range(5)]       
 ....: 
 ```
-解决2：偏函数partial
+解决2：偏函数partial<br/>
+新函数，可以固定住函数的变量i
 
 ```
 In : from functools import partial
