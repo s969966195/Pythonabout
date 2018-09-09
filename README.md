@@ -513,5 +513,582 @@ Out: 1
 
 ##### 延伸阅读
 1. [https://docs.python.org/3/library/timeit.html](https://docs.python.org/3/library/timeit.html)
-2. [http://t.cn/RnvaZ6j](https://docs.python.org/3/library/timeit.html)
+2. [http://t.cn/RnvaZ6j](http://t.cn/RnvaZ6j)
 
+## 字典
+**元组做键**
+
+```
+In : dct = {}
+In : dct['{}_{}'.format('a', 'c')] = 'T'
+In : dct = {                                            'a': {'c': 'T', 'd': 'N'}                           }                                                 
+In : dct['a']['c']                                      
+Out: 'T'
+In : dct[('a', 'c')] = 'T'
+In : dct[('a', 'c')]
+Out: 'T'
+```
+
+**get**<br/>
+获取如果没有键，不会报错，还可以设置第二个参数，如果找不到就默认返回
+
+```
+In : dct.get('a')                                                               
+Out: 1In : dct.get('b')
+In : dct['b']                                                                   
+---------------------------------------------------------------------------     
+KeyError                                  Traceback (most recent call last)     <ipython-input-140-8466ca6f70f2> in <module>()                                  
+----> 1 dct['b']                                                                
+KeyError: 'b'
+In : dct.get('b', 2)                                                            
+Out: 2
+```
+
+**update**<br/>
+没有就添加，有就更新
+
+```
+In : dct.update(a=1, b=2, c=3)                          
+In : dct
+Out: {'a': 1, 'b': 2, 'c': 3} 
+```
+
+**del**<br/>
+可以删掉，in判断是否在字典中
+
+```
+In : 'a' in dct                                         
+Out: TrueIn : del dct['a']                                       
+In : 'a' in dct                                         
+Out: False
+```
+
+python2中键值对顺序不保证，使用OrderedDict,在python3.6之后会记忆这个顺序
+
+```
+>>> from collections import OrderedDict
+>>> dct = OrderedDict(a=1)                              
+>>> dct['b'] = 2
+>>> dct['c'] = 3
+>>> dct                                                 
+OrderedDict([('a', 1), ('b', 2), ('c', 3)]) 
+```
+
+获取全部的键、全部的值、全部的键值对
+
+```
+In : dct = dict(a=1, c=2)                               
+In : dct.keys()                                         
+Out: dict_keys(['a', 'c'])                              
+In : dct.values()                                       
+Out: dict_values([1, 2])                                
+In : dct.items()                                        
+Out: dict_items([('a', 1), ('c', 2)]) 
+```
+
+##### 延伸阅读
+1. [https://docs.python.org/2/library/collections.html#collections.OrderedDict](https://docs.python.org/2/library/collections.html#collections.OrderedDictl)
+2. [https://developers.google.com/edu/python/dict-files](https://developers.google.com/edu/python/dict-files)
+
+## 集合
+无序，也使用{}，但没有:<br/>
+和列表直接可以互相转换，如果不考虑顺序，可以使用set来去重
+
+```
+In : set([1, 3, 2, 1])                                  
+Out: {1, 2, 3}                                          
+In : list({1, 3, 2, 1})                                 
+Out: [1, 2, 3]
+```
+
+初始化不能使用{}，这是一个空字典，要使用set()<br/>
+
+**添加和更新**
+
+```
+In : s.add(1)                                           
+In : s
+Out: {1}                                                
+In : s.add(1)                                           
+In : s
+Out: {1} 
+In : s.update([2, 3])                                   
+In : s
+Out: {1, 2, 3}                                          
+In : s.update([3, 4])                                   
+In : s
+Out: {1, 2, 3, 4} 
+```
+
+**删除**<br/>
+discard不会报错
+
+```
+In : s.remove(4)                                                                
+In : s
+Out: {1, 2, 3}                                                                  
+In : s.remove(4)                                                                
+---------------------------------------------------------------------------     
+KeyError                                  Traceback (most recent call last)     <ipython-input-33-737bdeaad795> in <module>()                                   
+----> 1 s.remove(4)                                                             
+KeyError: 4
+In : s.discard(4)
+```
+
+也有pop，但因为集合无序，返回的元素不确定
+
+**issubset/issuperset**<br/>
+判断两个集合的超集和子集
+
+```
+In : set([1]).issubset(set([1, 2]))                     
+Out: True
+In : set([1]).issuperset(set([1, 2]))                   
+Out: False
+In : set([1, 2]).issuperset(set([1]))                   
+Out: True
+```
+
+**交并差**
+
+```
+In : s1 = set([1, 2, 3])                                
+In : s2 = set([3, 4, 1])                                
+In : s1 & s2  # 交集
+Out: {1, 3}                                             
+In : s1 | s2  # 并集
+Out: {1, 2, 3, 4}                                       
+In : s1 - s2  # 差集
+Out: {2}                                                
+In : s2 - s1                                            
+Out: {4}
+```
+
+**不变集合**
+
+```
+In : fs = frozenset('hello')                                                    
+In : fs
+Out: frozenset({'e', 'h', 'l', 'o'})                                            
+In : fs.add('a')                                                                
+---------------------------------------------------------------------------     
+AttributeError                            Traceback (most recent call last)     
+<ipython-input-38-09a9d04c7ae3> in <module>()                                   
+----> 1 fs.add('a')                                                             
+AttributeError: 'frozenset' object has no attribute 'add'
+```
+
+##### 延伸阅读
+1. [https://www.geeksforgeeks.org/sets-in-python/](https://www.geeksforgeeks.org/sets-in-python/)
+
+
+## 控制流
+
+字典迭代 键 或 键和值
+
+```
+In : d = {'a': 1, 'b': 2}                               
+In : for k in d:                                        
+	...:     print(k, d[k])                                 
+	...:                                                    
+a 1
+b 2
+In : for k, v in d.items():                                
+	...:     print(k, v)                                    
+	...:                                                 
+a 1
+b 2
+```
+
+**else**<br/>
+除了在if中使用，在循环for或while中也可以使用，while变为false而非break语句中止的
+
+```
+In : for i in l:                                        
+....:     continue                                      
+....: else:                                             
+....:     print('do else')                              
+....:                                                   
+do else
+
+In : for i in l:                                        
+....:     if i == 3:                                    
+....:         break                                     
+....: else:                                             
+....:     print('do else')                              
+....:
+
+In : i = 1
+In : while 1:                                           
+....:     print(i)                                      
+....:     if i > 2:                                     
+....:         break                                     
+....:     i += 1
+....: else:                                             
+....:     print('do else')                              
+....:                                                   
+1
+2
+3
+
+```
+
+##### 延伸阅读
+1. [https://docs.python.org/3/tutorial/controlflow.html](https://docs.python.org/3/tutorial/controlflow.html)
+2. [https://python.swaroopch.com/control_flow.html](https://python.swaroopch.com/control_flow.html)
+
+# 程序分解方法
+## 函数
+**实参类型**
+
+1.位置参数 (positional argument)<br/>
+实参直接对应形参位置
+
+```
+In : def hello(*names):                                 
+...:     print(names)                                   
+...:                                                    
+In : hello()                                            
+()                                                      
+In : hello(1)                                           
+(1,)                                                    
+In : hello(1, 2)                                        
+(1, 2) 
+```
+2.强制关键字参数</br>
+python3.6 block前加了*，必须使用关键字形式的参数，不能使用位置参数
+
+```
+In : def hello(name='World'):                           
+...:     print(f'Hello, {name}!')                       
+...:                                                    
+In : hello()                                            
+Hello, World!                                           
+In : hello('Amy')                                       
+Hello, Amy!                                             
+In : hello(name='Chris')                                
+Hello, Chris! 
+```
+3.** 变长关键字参数
+
+```
+In : def run(a, b=1, **kwargs):
+...:     print(kwargs)
+...:     
+In : run(1)
+{}
+In : run(1, b=2)
+{}
+In : run(1, c=1)
+{'c': 1}
+```
+
+如果混合使用，位置参数必须位于关键字参数之前，顺序：常规参数、默认参数、变长元祖参数、变长关键字参数
+
+```
+In : def hello(name, default='World'):                                  
+...:     print(f'Hello, {name or default}!')                            
+...:
+
+In : def func(a, b=0, *args, **kwargs):                                 
+...:     print('a =', a, 'b =', b, 'args =', args, 'kwargs =', kwargs)  
+...: 
+```
+
+参数可以为函数
+
+```
+In : defhello(name):
+...:     print(f'Hello {name}!')                        
+...:                                                    
+
+In : deftest(func, name='World'):
+...:     func(name)                                     
+...:                                                    
+
+In : test(hello, 'Amy')                                 
+Hello Amy! 
+```
+在函数中给全局变量赋值会出现错误<br/>
+*错误：*
+
+```
+In : g = 0 
+                                                                    
+In : def run():                                                                
+...:     print(g)                                                              
+...:     g = 2                                                                 
+...:     print(g) 
+```
+*解决方法：* **global** 不推荐使用
+
+```
+In : def run():                                         
+...:     global g                                       
+...:     g += 2
+...:     print(g)                                       
+...:                                                    
+
+In : run()                                              
+2
+
+In : g
+Out: 2
+
+In : run()                                              
+4
+
+In : g
+Out: 4
+```
+
+**作用域(scope)**<br/>
+B：build-in 系统变量<br/>
+G：global 全局变量<br/>
+E：enclosing 嵌套作用域<br/>
+L：local 本地作用域
+
+**系统变量**<br/>
+```
+In : import builtins
+```  
+
+**Python 2 系统变量**
+
+```
+>>> import __builtin__                                  
+>>> dir(__builtin__) 
+```
+
+**嵌套作用域**
+把run2赋值给f
+
+```
+In : g = 0
+
+In : def run():                                         
+...:    g = 2
+...:    def run2():                                     
+...:        print(g)                                    
+...:    return run2                                     
+...:                                                    
+
+In : f = run()                                          
+
+In : f()                                                
+2
+```
+
+**闭包(Closure)**<br/>
+闭包指延伸了作用域的函数，其中包含函数定义体中引用，但是不在定义体中定义的非全局变量，它能访问定义体之外定义的非全局变量
+
+maker也叫做工厂函数，f，g都是它生产的函数
+
+```
+In : def maker(n):                                      
+...:     def action(m):                                 
+...:         return m * n                               
+...:     return action                                  
+...:                                                    
+
+In : f = maker(3)                                       
+
+In : f(2)                                               
+Out: 6
+
+In : g = maker(10)                                      
+
+In : g(2)                                               
+Out: 20
+```
+
+**nonlocal**
+
+```
+In : def run():                         
+...:     g = 2
+...:     def run2():                    
+...:         g = 4
+...:         print('inner ---> ', g)    
+...:     run2()                         
+...:     print('outer --->', g)         
+...:                                    
+
+In : run()                              
+inner --->  4
+outer ---> 2
+```
+修改嵌套作用域里面的变量，对父级作用域的变量做修改
+
+```
+In : def run():                         
+...:     g = 2
+...:     def run2():   
+...:         nonlocal g                 
+...:         g = 4
+...:         print('inner ---> ', g)    
+...:     run2()                         
+...:     print('outer --->', g)         
+...:                                    
+
+In : run()                              
+inner --->  4
+outer ---> 4
+```
+
+**匿名函数**<br/>
+lambda 临时性，小巧的函数
+
+```
+In : f = lambda n: n * 2
+
+In : f(10)                              
+Out: 20
+
+In : list(map(lambda x: x * 2, l1))                     
+Out: [2, 6, 8]  
+
+In : l = [[2, 4], [1, 1], [9, 3]]                       
+
+In : sorted(l)                                          
+Out: [[1, 1], [2, 4], [9, 3]] 
+
+In : sorted(l, key=lambda x:x[1])                       
+Out: [[1, 1], [9, 3], [2, 4]]  
+
+In : l3 = ['/boot/grub', '/usr/local', '/home/dongwm']  
+
+In : sorted(l3, key=lambda x: x.rsplit('/')[2])         
+Out: ['/home/dongwm', '/boot/grub', '/usr/local'] 
+```
+
+**map**<br/>
+对l1中的每个元素使用double
+
+```
+l1 = [1, 3, 4] 
+rs = map(double, l1)
+```
+
+**filter**<br/>
+过滤掉符合is_odd的元素
+
+```
+def is_odd(x):                                                     
+    return x % 2 == 1                                                                   
+
+rs = filter(is_odd, l1) 
+
+In : rsOut: <filter at0x105986d68>                                            
+
+In : list(rs)                                                           
+Out: [1, 3]
+``` 
+
+**reduce**
+将每个元素执行add函数
+
+```
+In : def add(a, b):                                     
+...:     return a + b                                   
+...:                                                    
+
+In : from functools import reduce                       
+
+In : reduce(add, [1, 2, 3])                             
+Out: 6
+
+In : reduce(add, [1, 2, 3], 10)                         
+Out: 16
+```
+
+**zip**<br/>
+两列表中对应下标的元素组合成元组
+
+```
+In : a = [1, 2, 3]
+
+In : b = [4, 5, 6]
+
+In : c = [7, 8, 9, 10]
+
+In : zip(a, b)
+Out: <zip at 0x10f305a48>
+
+In : list(zip(a, b))
+Out: [(1, 4), (2, 5), (3, 6)]
+
+In : list(zip(a, c))
+Out: [(1, 7), (2, 8), (3, 9)]
+
+In : list(zip(*zip(a, b))) 
+Out: [(1, 2, 3), (4, 5, 6)]
+```
+
+**开发陷阱(一) 可变默认参数**
+
+```
+In : def append_to(element, to=[]):     
+...:    to.append(element)              
+...:    return to                       
+...:                                    
+
+In : my_list = append_to(12)            
+
+In : my_list
+Out[83]: [12]                           
+
+In : my_other_list = append_to(42)      
+
+In : my_other_list
+Out: [12, 42]
+```
+不在列表后继续加
+
+```
+In : def append_to(element, to=None):   
+...:    if to is None:                  
+...:        to = []                     
+...:    to.append(element)              
+...:    return to
+...: 
+```
+
+**开发陷阱(二) 闭包变量绑定**
+
+```
+In : def create_multipliers():                          
+...:    return [lambda x : i * x for i inrange(5)]     
+...:                                                    
+
+In : for multiplier in create_multipliers():            
+...:    print(multiplier(2))                            
+...:                                                    
+8
+8
+8
+8
+8
+```
+解决1：函数默认值
+
+```
+In : def create_multipliers():                                  
+....:    return [lambda x, i=i : i * x for i inrange(5)]       
+....: 
+```
+解决2：偏函数partial
+
+```
+In : from functools import partial
+In : from operator import mul                                   
+
+In : def create_multipliers():                                  
+....:    return [partial(mul, i) for i in range(5)]             
+....: 
+```
+
+##### 延伸阅读
+1. [https://www.learnpython.org/en/Functions](https://www.learnpython.org/en/Functions)
+2. [http://book.pythontips.com/en/latest/map_filter.html](http://book.pythontips.com/en/latest/map_filter.html)
+3. [https://docs.python.org/3/library/functools.html](https://docs.python.org/3/library/functools.html)
